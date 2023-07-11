@@ -6,21 +6,33 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { Link } from 'react-router-dom';
-
-
+import { Image } from 'react-bootstrap';
+import { FaUser } from "react-icons/fa";
+// import background from '../Images/Images/sea.jpg';
 
 
 
 const Header = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
-    const handleLogOut = () => {
-        logOut()
-            .then(() => { })
-            .catch(error => console.error(error))
-    }
     return (
+
         <Navbar expand="lg" >
+            {/* <style>
+                .nav-background
+                    [
+                        backgroundImage: `url("${background}")`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                        width: '100vw',
+                        height: '100vh',
+                        position: 'relative'
+
+
+                ]
+                
+            </style> */}
             <Container >
                 <Navbar.Brand>
 
@@ -58,28 +70,27 @@ const Header = () => {
                         <Nav.Link href="#action2">Blog</Nav.Link>
 
 
-                        <Nav.Link href="#action2" className='me-4' >Contact</Nav.Link>
-                        <Nav >
-                            <>
+                        <Nav.Link href="#action2" className='me-4' >
+                            Contact
+                        </Nav.Link>
+                        <Nav>
+                            <Nav.Link href='#deets' >{user?.displayName}</Nav.Link>
+                            <Nav.Link eventKey={2} href="#memes" >
                                 {
-                                    user?.uid ?
-                                        <>
-                                            <span>{user?.displayName}</span>
-                                            <Button variant='light' onClick={handleLogOut}  >Log out</Button>
-                                        </>
-                                        :
-                                        <>
-                                            < Link to='/login'>Login</Link>
-                                            < Link to='/CreateAnAccount'>CreateAnAccount</Link>
-                                        </>
-
+                                    user?.photoURL ?
+                                        <Image style={{ height: '40px' }} roundedCircle src={user.photoURL} ></Image>
+                                        : <FaUser></FaUser>
                                 }
-                            </>
+
+                            </Nav.Link>
 
                         </Nav>
 
+                        <Button variant='warning' >
 
-                        <Button variant="warning">Login</Button>
+                            <Link to="/login" >Login</Link>
+                        </Button>
+
 
 
                     </Nav>
